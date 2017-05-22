@@ -1,0 +1,15 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'Main'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+   // compile 'org.hibernate:hibernate-core:5.2.10.Final'
+    compile 'junit:junit:+'
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.18.0'
+}

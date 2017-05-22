@@ -1,0 +1,6 @@
+build/
+.gradle/
+.idea
+WordCards.iml
+WordCards.iws
+WordCards.ipr
