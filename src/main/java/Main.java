@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,9 +11,28 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-
-
-
+        List<WordCard> allWordCards = getAllWordCards();
+        Collections.shuffle(allWordCards);
+        List<WordCard> wordCardsForOneRound = allWordCards.subList(0, 5);
+        NoisePicker noisePicker = new RandomNoisePicker();
+        View view = new ConsoleView();
+        for(WordCard wordCard : wordCardsForOneRound) {
+            List<WordCard> noiseWordCards = noisePicker.getNoise(wordCard, allWordCards, 3);
+            noiseWordCards.add(wordCard);
+            Collections.shuffle(noiseWordCards);
+            view.showQuestedWord(wordCard);
+            view.showPossibleAnswers(noiseWordCards);
+            int answerIndex = view.getUserAnswer();
+            if(answerIndex < 0 || answerIndex >= noiseWordCards.size()) {
+                continue;
+            }
+            WordCard userAnswer = noiseWordCards.get(answerIndex);
+            if(wordCard.getOriginalWord().equals(userAnswer.getOriginalWord())) {
+                view.showSuccess();
+            } else {
+                view.showWrong(wordCard);
+            }
+        }
     }
 
 
